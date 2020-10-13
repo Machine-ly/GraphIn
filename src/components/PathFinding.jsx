@@ -4,17 +4,18 @@ import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
 import Header from "./Header";
 import "../assets/css/path.css";
 
-const START_NODE_ROW = 8;
-const START_NODE_COL = 2;
-const FINISH_NODE_ROW = 8;
-const FINISH_NODE_COL = 14;
+const START_NODE_ROW = 5;
+const START_NODE_COL = 1;
+const FINISH_NODE_ROW = 5;
+const FINISH_NODE_COL = 9;
 
 export default class PathfindingVisualizer extends Component {
   constructor() {
     super();
     this.state = {
       grid: [],
-      mouseIsPressed: false
+      mouseIsPressed: false,
+      currNode: ""
     };
   }
 
@@ -43,15 +44,15 @@ export default class PathfindingVisualizer extends Component {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
+        }, 400 * i);
         return;
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node node-visited";
-        // document.getElementById("algoInfo").innerHTML =`(${node.row},${node.col})`
-      }, 10 * i);
+        this.setState({currNode: `(${node.row},${node.col})`})
+      }, 400 * i);
     }
   }
 
@@ -61,7 +62,7 @@ export default class PathfindingVisualizer extends Component {
         const node = nodesInShortestPathOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node node-shortest-path";
-      }, 50 * i);
+      }, 400 * i);
     }
   }
 
@@ -75,7 +76,7 @@ export default class PathfindingVisualizer extends Component {
   }
 
   render() {
-    const { grid, mouseIsPressed } = this.state;
+    const { grid, mouseIsPressed, currNode } = this.state;
     return (
       <>
         <Header />
@@ -113,7 +114,16 @@ export default class PathfindingVisualizer extends Component {
             );
           })}
         </div>
-        <div className="grid algoInfo" id="info">{''}</div>
+        <div className="grid algoInfo" id="info">
+        <div className="algoin">
+        <h1>Current Node</h1>
+        <h1>{currNode}</h1>
+        </div>
+        <div className="algoin">
+        <h2 >Complexity:O(ElogV) </h2>
+        <h2>Dijkstra algorithm is weighted & guarantees shortest path</h2>
+        </div>
+        </div>
         </div>
       </>
     );
@@ -121,9 +131,9 @@ export default class PathfindingVisualizer extends Component {
 }
 const getInitialGrid = () => {
   const grid = [];
-  for (let row = 0; row < 18; row++) {
+  for (let row = 0; row < 11; row++) {
     const currentRow = [];
-    for (let col = 0; col < 16; col++) {
+    for (let col = 0; col < 11; col++) {
       currentRow.push(createNode(col, row));
     }
     grid.push(currentRow);

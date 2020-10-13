@@ -1,6 +1,6 @@
 .node {
-  width: 50px;
-  height: 20px;
+  width: 80px;
+  height: 40px;
   margin: 3px;
   background-color: #a1a6a3;
   border-radius: 3px;
@@ -8,6 +8,7 @@
   cursor: pointer;
   display: inline-block;
   transition: background-color 0.3s ease-out;
+  text-align: center;
 }
 
 .node-finish {
