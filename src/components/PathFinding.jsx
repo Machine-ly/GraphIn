@@ -4,10 +4,10 @@ import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
 import Header from "./Header";
 import "../assets/css/path.css";
 
-const START_NODE_ROW = 9;
-const START_NODE_COL = 15;
-const FINISH_NODE_ROW = 9;
-const FINISH_NODE_COL = 35;
+const START_NODE_ROW = 8;
+const START_NODE_COL = 2;
+const FINISH_NODE_ROW = 8;
+const FINISH_NODE_COL = 14;
 
 export default class PathfindingVisualizer extends Component {
   constructor() {
@@ -50,6 +50,7 @@ export default class PathfindingVisualizer extends Component {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node node-visited";
+        // document.getElementById("algoInfo").innerHTML =`(${node.row},${node.col})`
       }, 10 * i);
     }
   }
@@ -75,7 +76,6 @@ export default class PathfindingVisualizer extends Component {
 
   render() {
     const { grid, mouseIsPressed } = this.state;
-
     return (
       <>
         <Header />
@@ -85,6 +85,7 @@ export default class PathfindingVisualizer extends Component {
         >
           Visualize Dijkstra's Algorithm
         </button>
+        <div className="container">
         <div className="grid">
           {grid.map((row, rowIdx) => {
             return (
@@ -112,6 +113,8 @@ export default class PathfindingVisualizer extends Component {
             );
           })}
         </div>
+        <div className="grid algoInfo" id="info">{''}</div>
+        </div>
       </>
     );
   }
@@ -120,7 +123,7 @@ const getInitialGrid = () => {
   const grid = [];
   for (let row = 0; row < 18; row++) {
     const currentRow = [];
-    for (let col = 0; col < 50; col++) {
+    for (let col = 0; col < 16; col++) {
       currentRow.push(createNode(col, row));
     }
     grid.push(currentRow);

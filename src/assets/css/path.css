@@ -1,3 +1,14 @@
 .grid {
   margin: 20px 0 0;
+  flex: 1;
+}
+.container {
+  display: flex;
+}
+
+.algoInfo {
+  margin-right: 50px;
+  max-width: 400px;
+  height: 460px;
+  border: solid;
 }
