@@ -1,15 +1,14 @@
 import React from "react";
 import "./App.css";
-//import Container from "./components/Container";
-//import { Provider } from "./components/Provider";
-import PathfindingVisualizer from "./components/PathFinding";
+//import PathfindingVisualizer from "./components/PathFinding";
+// import Graphy from "./components/Graphy"
+import Board from "./components/Board/Board"
 function App() {
   return (
     <div className="App">
-      {/* <Provider>
-        <Container />
-      </Provider> */}
-      <PathfindingVisualizer></PathfindingVisualizer>
+      {/* <PathfindingVisualizer></PathfindingVisualizer> */}
+      {/* <Graphy/> */}
+      <Board/>
     </div>
   );
 }
