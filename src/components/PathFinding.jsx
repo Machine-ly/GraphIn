@@ -133,7 +133,7 @@ const getInitialGrid = () => {
   const grid = [];
   for (let row = 0; row < 11; row++) {
     const currentRow = [];
-    for (let col = 0; col < 11; col++) {
+    for (let col = 0; col < 10; col++) {
       currentRow.push(createNode(col, row));
     }
     grid.push(currentRow);
