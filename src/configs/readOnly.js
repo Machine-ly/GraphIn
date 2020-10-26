@@ -34,11 +34,6 @@ export const algoOptions = [
     data: "traversal",
     text: "Depth First Search"
   },
-  {
-    key: "minspantreeprims",
-    data: "traversal",
-    text: "Minimum Spanning Tree"
-  },
   { key: "divider_2", text: "-", itemType: DropdownMenuItemType.Divider },
   {
     key: "pathfinding",

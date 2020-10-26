@@ -211,7 +211,9 @@ export const Graph = (props) => {
       if (i === visitedEdges.length) {
         setTimeout(() => {
           setPathFindingNode(null);
+          if(shortestPath){
           visualizeShortestPath(shortestPath);
+          }
         }, visualizationSpeed * i);
         return;
       }
