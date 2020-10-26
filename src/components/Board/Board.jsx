@@ -32,7 +32,7 @@ export default function Board () {
     algoOptions[0]
   );
   const [isVisualizing, setVisualizingState] = useState(false);
-  const [visualizationSpeed, setVisualizationSpeed] = useState(250);
+  const [visualizationSpeed, setVisualizationSpeed] = useState(1000);
 
   useEffect(() => {
     if (!isVisualizing) {
@@ -96,7 +96,7 @@ export default function Board () {
       <div className={styles.board}>
         <div
           className={styles.controlPanel}
-          style={isPullDownMenuOpen ? { top: "-7%" } : { top: "-125%" }}
+          // style={isPullDownMenuOpen ? { top: "-7%" } : { top: "-125%" }}
         >
           {/* <img className={styles.appIcon} src={appIcon} alt="App Icon"></img> */}
           <div className={styles.nodeOptions}>
@@ -110,7 +110,7 @@ export default function Board () {
               <i className={`${styles.icon} fas fa-circle`}></i>
               Draw Node
             </button>
-            <button
+            {/* <button
               className={`${styles.optionButtons} ${
                 options.moveNode && styles.selectedButtonOption
               }`}
@@ -119,8 +119,8 @@ export default function Board () {
             >
               <i className={`${styles.icon} fas fa-arrows-alt`}></i>
               Move Node
-            </button>
-            <button
+            </button> */}
+            {/* <button
               className={`${styles.optionButtons} ${
                 options.deleteNode && styles.selectedButtonOption
               }`}
@@ -129,7 +129,7 @@ export default function Board () {
             >
               <i className={`${styles.icon} fas fa-trash`}></i>
               Delete Node
-            </button>
+            </button> */}
           </div>
           <div className={styles.edgeOptions}>
             <Dropdown
@@ -153,7 +153,7 @@ export default function Board () {
               <i className={`${styles.icon} fas fa-pen`}></i>
               Edit Edge
             </button>
-            <button
+            {/* <button
               className={`${styles.optionButtons} ${
                 options.deleteEdge && styles.selectedButtonOption
               }`}
@@ -162,7 +162,7 @@ export default function Board () {
             >
               <i className={`${styles.icon} fas fa-trash`}></i>
               Delete Edge
-            </button>
+            </button> */}
           </div>
           <div className={styles.visualizeControls}>
             <Dropdown
@@ -176,7 +176,7 @@ export default function Board () {
               onChange={handleAlgoOptions}
               disabled={isVisualizing}
             />
-            <Slider
+            {/* <Slider
               className={styles.speedSlider}
               label="Visual Delay"
               styles={sliderOptions}
@@ -186,7 +186,7 @@ export default function Board () {
               value={visualizationSpeed}
               onChange={setVisualizationSpeed}
               disabled={isVisualizing}
-            />
+            /> */}
           </div>
           <div className={styles.miscellaneous}>
             <button
@@ -220,19 +220,6 @@ export default function Board () {
             nodeSelection={nodeSelection}
             setNodeSelection={setNodeSelection}
           />
-          <div className={styles.pullDownMenu} onClick={handlePullDownMenu}>
-            <div
-              className={styles.pullDownMenuButton}
-              style={
-                isPullDownMenuOpen
-                  ? { transform: "rotate(225deg)" }
-                  : { transform: "rotate(45deg" }
-              }
-            ></div>
-          </div>
-          <div className={styles.madeInIndia}>
-
-          </div>
         </div>
       </div>
     </>
