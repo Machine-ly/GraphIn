@@ -215,6 +215,7 @@ export const Graph = (props) => {
           visualizeShortestPath(shortestPath);
           }
         }, visualizationSpeed * i);
+        setVisualizingState(false)
         return;
       }
 
