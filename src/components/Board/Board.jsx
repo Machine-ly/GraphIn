@@ -4,23 +4,16 @@ import styles from "./Board.module.css";
 import { mapValues } from "lodash";
 import {
   Dropdown,
-  Slider,
   ProgressIndicator,
 } from "@fluentui/react";
-import { edgeOptions, algoOptions } from "../../configs/readOnly";
-import { optionButtonStyles, sliderOptions } from "./BoardStyles";
-// import appIcon from "../../images/graphisual.svg";
+import { edgeOptions, algoOptions } from "../../assets/js/readOnly";
 
 export default function Board () {
   const [options, setOptions] = useState({
     drawNode: true,
-    moveNode: false,
-    deleteNode: false,
     reset: false,
     editEdge: false,
-    deleteEdge: false,
   });
-  const [isPullDownMenuOpen, setPullDownMenuState] = useState(false);
   const [nodeSelection, setNodeSelection] = useState({
     isStartNodeSelected: false,
     isEndNodeSelected: false,
@@ -32,12 +25,11 @@ export default function Board () {
     algoOptions[0]
   );
   const [isVisualizing, setVisualizingState] = useState(false);
-  const [visualizationSpeed, setVisualizationSpeed] = useState(1000);
+  const visualizationSpeed = 1000;
 
   useEffect(() => {
     if (!isVisualizing) {
       setSelectedAlgo({ key: "select", text: "Select Algorithm" });
-      // setNodeSelection({...options})
     }
   }, [isVisualizing]);
 
@@ -54,7 +46,6 @@ export default function Board () {
       isEndNodeSelected: false,
     });
     setOptions(updatedOptions);
-    setPullDownMenuState(false);
   };
 
   //handles the selection of edge options and corresponding toggles for other options in control panel.
@@ -63,7 +54,6 @@ export default function Board () {
     setOptions(updatedOptions);
     setSelectedAlgo({ key: "select", text: "Select Algorithm" });
     setSelectedEdge(option);
-    setPullDownMenuState(false);
   };
 
   //handles the selection of algo options and corresponding toggles for other options in control panel.
@@ -86,19 +76,14 @@ export default function Board () {
       const updatedOptions = mapValues(options, () => false);
       setOptions(updatedOptions);
     }
-    setPullDownMenuState(false);
   };
-  const handlePullDownMenu = () => {
-    setPullDownMenuState(!isPullDownMenuOpen);
-  };
+
   return (
     <>
       <div className={styles.board}>
         <div
           className={styles.controlPanel}
-          // style={isPullDownMenuOpen ? { top: "-7%" } : { top: "-125%" }}
         >
-          {/* <img className={styles.appIcon} src={appIcon} alt="App Icon"></img> */}
           <div className={styles.nodeOptions}>
             <button
               className={`${styles.optionButtons} ${
@@ -110,26 +95,6 @@ export default function Board () {
               <i className={`${styles.icon} fas fa-circle`}></i>
               Draw Node
             </button>
-            {/* <button
-              className={`${styles.optionButtons} ${
-                options.moveNode && styles.selectedButtonOption
-              }`}
-              onClick={() => activateOption("moveNode")}
-              disabled={isVisualizing}
-            >
-              <i className={`${styles.icon} fas fa-arrows-alt`}></i>
-              Move Node
-            </button> */}
-            {/* <button
-              className={`${styles.optionButtons} ${
-                options.deleteNode && styles.selectedButtonOption
-              }`}
-              onClick={() => activateOption("deleteNode")}
-              disabled={isVisualizing}
-            >
-              <i className={`${styles.icon} fas fa-trash`}></i>
-              Delete Node
-            </button> */}
           </div>
           <div className={styles.edgeOptions}>
             <Dropdown
@@ -137,7 +102,6 @@ export default function Board () {
                 selectedEdge?.key !== "select" && styles.selectedDropdownOption
               }`}
               options={edgeOptions}
-              styles={optionButtonStyles.edgeDropdown}
               placeholder="Select Edge"
               selectedKey={selectedEdge && selectedEdge.key}
               onChange={handleEdgeOptions}
@@ -153,16 +117,6 @@ export default function Board () {
               <i className={`${styles.icon} fas fa-pen`}></i>
               Edit Edge
             </button>
-            {/* <button
-              className={`${styles.optionButtons} ${
-                options.deleteEdge && styles.selectedButtonOption
-              }`}
-              onClick={() => activateOption("deleteEdge")}
-              disabled={isVisualizing}
-            >
-              <i className={`${styles.icon} fas fa-trash`}></i>
-              Delete Edge
-            </button> */}
           </div>
           <div className={styles.visualizeControls}>
             <Dropdown
@@ -170,23 +124,11 @@ export default function Board () {
                 selectedAlgo?.key !== "select" && styles.selectedDropdownOption
               }`}
               options={algoOptions}
-              styles={optionButtonStyles.algoDropdown}
               placeholder="Select Algorithm"
               selectedKey={selectedAlgo && selectedAlgo.key}
               onChange={handleAlgoOptions}
               disabled={isVisualizing}
             />
-            {/* <Slider
-              className={styles.speedSlider}
-              label="Visual Delay"
-              styles={sliderOptions}
-              min={100}
-              max={1000}
-              step={100}
-              value={visualizationSpeed}
-              onChange={setVisualizationSpeed}
-              disabled={isVisualizing}
-            /> */}
           </div>
           <div className={styles.miscellaneous}>
             <button

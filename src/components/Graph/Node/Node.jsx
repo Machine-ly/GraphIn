@@ -7,8 +7,8 @@ export const Node = (props) => {
     edges,
     handleMove,
     handleEdge,
-    deleteNodeMode,
-    deleteEdgeMode,
+    // deleteNodeMode,
+    // deleteEdgeMode,
     editEdgeMode,
     readyForVisualization,
     readyForMovement,
@@ -19,7 +19,7 @@ export const Node = (props) => {
     <g className={styles.nodeGroup}>
       <circle
         onPointerDown={handleMove}
-        className={`${styles.node} ${deleteNodeMode && styles.deleteNodeMode} ${
+        className={`${styles.node} ${
           node.isVisited && styles.visited
         } ${node.isInShortestPath && styles.shortestPath} ${
           readyForVisualization && styles.readyForVisualization
@@ -69,9 +69,7 @@ export const Node = (props) => {
                     id={`${node.id}${edge.to}`}
                     onClick={() => handleEdge(edge, node)}
                     d={directedPath}
-                    className={`${styles.directedEdge} ${
-                      deleteEdgeMode && styles.deleteEdgeMode
-                    } ${editEdgeMode && styles.editEdgeMode} ${
+                    className={`${styles.directedEdge} ${editEdgeMode && styles.editEdgeMode} ${
                       (readyForVisualization ||
                         readyForMovement ||
                         readyForEdge) &&
@@ -101,9 +99,7 @@ export const Node = (props) => {
                     d={undirectedPath}
                     id={`${node.id}${edge.to}`}
                     onClick={() => handleEdge(edge, node)}
-                    className={`${styles.undirectedEdge} ${
-                      deleteEdgeMode && styles.deleteEdgeMode
-                    } ${editEdgeMode && styles.editEdgeMode}
+                    className={`${styles.undirectedEdge} ${editEdgeMode && styles.editEdgeMode}
                     ${
                       (readyForVisualization ||
                         readyForMovement ||
