@@ -2,7 +2,6 @@
 
 import { Queue } from "../data-structures/Queue";
 import { Stack } from "../data-structures/Stack";
-import { cloneDeep } from "lodash";
 
 export const bfs = (edges, startNodeId) => {
   const bfsQueue = new Queue();
@@ -222,42 +221,4 @@ const findNeighbours = (nodeId, edges, visitedSet) => {
     });
   }
   return [];
-};
-
-const getVisitedEdges = (prev, visitedEdges, nodes, startNodeId) => {
-  const mockEdge = {
-    x1: NaN,
-    x2: NaN,
-    y1: NaN,
-    y2: NaN,
-    nodeX2: NaN,
-    nodeY2: NaN,
-    from: "Infinity",
-    to: startNodeId.toString(),
-    type: "directed",
-    weight: NaN,
-    isUsedInTraversal: false
-  };
-
-  for (let i = 0; i < nodes.length; i++) {
-    if (prev.get(nodes[i].id) !== undefined) {
-      visitedEdges.push({
-        ...mockEdge,
-        from: prev.get(nodes[i].id)?.toString(),
-        to: nodes[i].id.toString()
-      });
-    }
-  }
-  return visitedEdges;
-};
-const getFromNotIncludedInMST = (edges, mstSet, nodeMap) => {
-  let minimumWeight = Infinity;
-  let minimumNodeId;
-  edges.forEach((_value, nodeId) => {
-    if (!mstSet.has(nodeId) && nodeMap.get(nodeId) < minimumWeight) {
-      minimumWeight = nodeMap.get(nodeId);
-      minimumNodeId = nodeId;
-    }
-  });
-  return minimumNodeId;
 };

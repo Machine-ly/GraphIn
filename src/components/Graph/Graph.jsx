@@ -12,10 +12,9 @@ import {
   bfs,
   dfs,
   dijkstra,
-  // minspantreeprims,
 } from "../../algorithms/algorithms.js";
 import { cloneDeep } from "lodash";
-import { algoMessages } from "../../configs/readOnly";
+import { algoMessages } from "../../assets/js/readOnly";
 
 export const Graph = (props) => {
   const {
@@ -36,7 +35,6 @@ export const Graph = (props) => {
   const [edge, setEdge] = useState(null);
   const [pathFindingNode, setPathFindingNode] = useState(null);
   const [isPathPossible, setPathPossible] = useState(true);
-  const [isTraversalPossible, setTraversalPossible] = useState(true);
   const [mockEdge, setMockEdge] = useState(null);
   const currentNode = useRef();
   const currentEdge = useRef();
@@ -105,22 +103,6 @@ export const Graph = (props) => {
     edges.set(nodesTillNow.current, []);
     setEdges(edges);
     setNodes([...nodes, newNode]);
-  };
-
-  //delete an existing node from the graph
-  const deleteNode = (event) => {
-    const target = event.target;
-    let newNodes = nodes.filter(
-      (node) => node.id !== parseInt(target.id)
-    );
-    edges.forEach((list, nodeId) => {
-      let newList = list?.filter((edge) => target.id !== edge.to);
-      edges.set(nodeId, newList);
-    });
-
-    edges.delete(parseInt(target.id));
-    setEdges(edges);
-    setNodes(newNodes);
   };
 
   //handles the logic for setting nodes and edges state for visualization
@@ -240,33 +222,15 @@ export const Graph = (props) => {
     const isNode = target.tagName === "circle";
     if (options.drawNode && !isNode) {
       addNode(event);
-    } else if (options.deleteNode && isNode) {
-      deleteNode(event);
     } else if (selectedAlgo?.data === "traversal" && isNode && !isVisualizing) {
-      const startNodeId = parseInt(target.id);
-      if (selectedAlgo?.key === "bfs") {
-        let visitedEdges = bfs(edges, startNodeId);
-        visualizeGraph(visitedEdges);
-      } else if (selectedAlgo?.key === "dfs") {
-        let visitedEdges = dfs(edges, startNodeId);
-        visualizeGraph(visitedEdges);}
-      // } else if (selectedAlgo.key === "minspantreeprims") {
-      //   let visitedEdges = minspantreeprims(edges, nodes, startNodeId);
-      //   if (visitedEdges.length !== 0) visualizeGraph(visitedEdges);
-      //   else {
-      //     setTraversalPossible(false);
-      //     setVisualizingState(true);
-      //     setNodeSelection({
-      //       ...nodeSelection,
-      //       isStartNodeSelected: false,
-      //       isEndNodeSelected: false,
-      //     });
-      //     setTimeout(() => {
-      //       setTraversalPossible(true);
-      //       setVisualizingState(false);
-      //     }, 2500);
-      //   }
-      // }
+        const startNodeId = parseInt(target.id);
+        if (selectedAlgo?.key === "bfs") {
+          let visitedEdges = bfs(edges, startNodeId);
+          visualizeGraph(visitedEdges);
+        } else if (selectedAlgo?.key === "dfs") {
+          let visitedEdges = dfs(edges, startNodeId);
+          visualizeGraph(visitedEdges);
+        }
     } else if (
       selectedAlgo?.data === "pathfinding" &&
       isNode &&
@@ -303,48 +267,6 @@ export const Graph = (props) => {
     }
   };
 
-  //updates node coordinates when moving it
-  const updateNodeCoord = (x, y) => {
-    let newNodes = nodes.map((node) => {
-      if (node.id === parseInt(currentNode.current.id)) {
-        return { ...node, x, y };
-      }
-      return node;
-    });
-    setNodes(newNodes);
-  };
-  //updates edge coordinates when moving nodes
-  const updateEdgeCoord = (x, y) => {
-    let newBegEdgePositionsForNode = edges
-      ?.get(parseInt(currentNode.current.id))
-      ?.map((edge) => {
-        let { tempX, tempY } = calculateAccurateCoords(
-          x,
-          y,
-          edge.nodeX2,
-          edge.nodeY2
-        );
-        return { ...edge, x1: x, y1: y, x2: tempX, y2: tempY };
-      });
-    edges.set(parseInt(currentNode.current.id), newBegEdgePositionsForNode);
-    edges.forEach((list, nodeId) => {
-      let newList = list?.map((edge) => {
-        if (currentNode.current.id === edge.to) {
-          let { tempX, tempY } = calculateAccurateCoords(
-            edge.x1,
-            edge.y1,
-            edge.nodeX2,
-            edge.nodeY2
-          );
-          return { ...edge, x2: tempX, y2: tempY, nodeX2: x, nodeY2: y };
-        }
-        return edge;
-      });
-      edges.set(nodeId, newList);
-    });
-
-    setEdges(edges);
-  };
 
   //add a new edge between two nodes
   const addEdge = (id, tagName, x, y) => {
@@ -433,35 +355,11 @@ export const Graph = (props) => {
 
   //common handler for deletion and edition of edges.
   const handleEdge = (edge, fromNode) => {
-    if (options.deleteEdge) {
-      deleteEdge(edge, fromNode.id);
-    } else if (options.editEdge) {
+    if (options.editEdge) {
       editEdge(edge, fromNode);
     }
   };
 
-  //delete edge functionality
-  const deleteEdge = (currentEdge, fromNode) => {
-    if (currentEdge.type === "directed") {
-      let upgradedEdges = edges
-        ?.get(fromNode)
-        ?.filter((edge) => edge.to !== currentEdge.to);
-      let newEdges = new Map(edges);
-      newEdges.set(fromNode, upgradedEdges);
-      setEdges(newEdges);
-    } else if (currentEdge.type === "undirected") {
-      let upgradedOutgoingEdges = edges
-        ?.get(fromNode)
-        ?.filter((edge) => edge.to !== currentEdge.to);
-      let upgradedIncomingEdges = edges
-        ?.get(parseInt(currentEdge.to))
-        ?.filter((edge) => edge.to !== fromNode.toString());
-      let newEdges = new Map(edges);
-      newEdges.set(fromNode, upgradedOutgoingEdges);
-      newEdges.set(parseInt(currentEdge.to), upgradedIncomingEdges);
-      setEdges(newEdges);
-    }
-  };
 
   //function called when edit Edge button is clicked.
   const editEdge = (edge, fromNode) => {
@@ -519,23 +417,10 @@ export const Graph = (props) => {
     if (canMoveNode) {
       currentNode.current = event.target;
 
-      //logic for movement of nodes.
-      const handleNodeMove = (event) => {
-        let nodeX = event.clientX - graph.current.getBoundingClientRect().left;
-        let nodeY = event.clientY - graph.current.getBoundingClientRect().top;
-        currentNode.current.setAttribute("cx", nodeX);
-        currentNode.current.setAttribute("cy", nodeY);
-        currentNode.current.nextElementSibling.setAttribute("x", nodeX);
-        currentNode.current.nextElementSibling.setAttribute("y", nodeY + 5);
-        updateNodeCoord(nodeX, nodeY);
-        updateEdgeCoord(nodeX, nodeY);
-      };
       //function triggered to remove mouse event listeners.
       const handleNodeEnd = () => {
-        graph.current.removeEventListener("pointermove", handleNodeMove);
         graph.current.removeEventListener("pointerup", handleNodeEnd);
       };
-      graph.current.addEventListener("pointermove", handleNodeMove);
       graph.current.addEventListener("pointerup", handleNodeEnd);
     } else if (canDrawEdge) {
       currentNode.current = event.target;
@@ -587,7 +472,7 @@ export const Graph = (props) => {
   return (
     <>
       {selectedAlgo?.data === "traversal" &&
-        (isTraversalPossible ? (
+        (
           <MessageBar
             className={styles.traversal}
             isMultiline={false}
@@ -596,17 +481,8 @@ export const Graph = (props) => {
           >
             {algoMessages[selectedAlgo?.data][selectedAlgo.key]["info"]}
           </MessageBar>
-        ) : (
-          <MessageBar
-            className={styles.pathError}
-            messageBarType={MessageBarType.error}
-            isMultiline={false}
-            dismissButtonAriaLabel="Close"
-            styles={{ text: { fontWeight: "bold", fontSize: "14px" } }}
-          >
-            {algoMessages[selectedAlgo?.data][selectedAlgo.key]["failure"]}
-          </MessageBar>
-        ))}
+        )
+      }
       {selectedAlgo?.data === "pathfinding" &&
         (isPathPossible ? (
           <MessageBar

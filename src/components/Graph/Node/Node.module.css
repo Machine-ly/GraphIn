@@ -79,7 +79,7 @@
   -ms-user-select: none;
 }
 .edgeText {
-  fill: white;
+  fill: blueviolet;
   /* dominant-baseline: text-after-edge; */
   pointer-events: none;
   user-select: none;
@@ -96,7 +96,7 @@
   pointer-events: none;
 }
 .arrow {
-  fill: white;
+  fill: black;
 }
 
 @media only screen and (min-width: 1200px) {

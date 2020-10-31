@@ -54,11 +54,6 @@ export const algoMessages = {
     },
     dfs: {
       info: "Click on any node to begin the traversal."
-    },
-    minspantreeprims: {
-      info:
-        "Click on any node to see the minimum spanning tree. Works only on connected undirected graphs.",
-      failure: "Graph violates the requirements of the algorithm."
     }
   },
   pathfinding: {
