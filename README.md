@@ -2,7 +2,7 @@
 
 ### [Live Demo](https://machine-ly.github.io/GraphIn/)
 
-A graph visualising algorithm, widely used by Studnets and teachers to understand graph algorithms better.
+A graph visualising algorithm, widely used by Students and teachers to visualise & understand graph algorithms better.
 
 ## App Features
 - Draw Nodes
