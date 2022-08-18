@@ -1,6 +1,7 @@
 {
   "name": "path-visualizer",
   "version": "0.1.0",
+  "homepage": "https://Machine-ly.github.io/GraphIn",
   "private": true,
   "dependencies": {
     "@fluentui/react": "^7.117.3",
@@ -10,11 +11,13 @@
     "lodash": "^4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-graph-visualizer": "^1.1.7",
     "react-fast-compare": "^3.2.0",
+    "react-graph-visualizer": "^1.1.7",
     "react-scripts": "3.4.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -34,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
 }
